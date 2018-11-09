@@ -139,6 +139,26 @@
     <meta charset="utf-8">
     <title></title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.min.js"></script>
+    <script type="text/javascript"> //webfonts
+      WebFontConfig = {
+          google: {
+            families: ["Fredoka One"]
+          }//,
+          // active: function() {
+          //   // do something
+          //   init();
+          // }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    </script>
   </head>
   <body>
 
@@ -157,10 +177,16 @@
       var obstacles = [];
       var sourceLetters = "abcdefghijklmnopqrstuvwxyz".split("");
       var typed = "";
-      var moveSpeed = 2;
-      var obstacleDistance = 400;
+      var moveSpeed = 4;
+      var moveIncrement = 0;
+      var obstacleDistance = 700;
+
+      //containers
       var groundContainer;
       var everythingContainer;
+
+      //etc
+      var background;
 
     //controls
     body.onkeydown = (e) => {
@@ -234,6 +260,24 @@
         this.isJump = false;
         this.jumpHeightWave = 0;
         this.jumpHeight = 0;
+        this._jumpSpeed = 0.05;
+        this._jumpSpeedLimit = 0.1;
+      }
+
+      resetJumpSpeed(){
+        this._jumpSpeed = 0.01;
+      }
+
+      set jumpSpeed(value){
+        if(value>=this._jumpSpeedLimit){
+          this._jumpSpeed = this._jumpSpeedLimit;
+        }else{
+          this._jumpSpeed = value;
+        }
+      }
+
+      get jumpSpeed(){
+        return this._jumpSpeed;
       }
 
       jump(){
@@ -244,13 +288,14 @@
         if(this.isJumping){
           this.jumpHeightWave += 1;
         }
-        this.jumpHeight = Math.sin(this.jumpHeightWave*0.1)*100;
+        this.jumpHeight = Math.sin(this.jumpHeightWave*this._jumpSpeed)*100;
         if(this.jumpHeight <= 0){
           this.jumpHeight = 0;
           this.jumpHeightWave = 0;
           this.isJumping = false;
         }
         this.sprite.y = this.y + this.jumpHeight;
+        console.log(this._jumpSpeed);
       }
     }
 
@@ -311,13 +356,21 @@
       p1 = new Player(new PIXI.Sprite.fromImage("img/shroom.png"),150,240);
       everythingContainer = new PIXI.Container();
       groundContainer = new PIXI.Container();
+      background = new PIXI.Sprite.fromImage("img/BG.png");
+      background.y -= 200;
       var groundTexture = PIXI.Texture.fromImage("img/floor.png");
+      var lowerGroundTexture = PIXI.Texture.fromImage("img/lowerfloor.png");
       for(var i = 0; i < 20; i++){
         var tile = new PIXI.Sprite(groundTexture);
+        var lowertile = new PIXI.Sprite(lowerGroundTexture);
+        lowertile.x = 128 * i;
+        lowertile.y = 128;
         tile.x = 128 * i;
+        groundContainer.addChild(lowertile);
         groundContainer.addChild(tile);
       }
       groundContainer.y = 280;
+      everythingContainer.addChild(background);
       everythingContainer.addChild(groundContainer);
     // everythingContainer.addChild(p1.getSprite);
 
@@ -325,9 +378,14 @@
         obstacles.push(
           new Obstacle(
               new PIXI.Sprite.fromImage("img/crate.png"),
-              index * obstacleDistance,
+              800 + index * obstacleDistance,
               240,
-              new PIXI.Text(letter),
+              new PIXI.Text(letter,{
+                fill:0xffffff,
+                fontWeight: "bold",
+                fontFamily: "Century Gothic",
+                fontSize: 36
+              }),
               0.7
             )
           );
@@ -342,6 +400,7 @@
     }
 
     function moveObstacles(){
+      moveSpeed += moveIncrement;
       obstacles.forEach((obstacle,index)=>{
         obstacle.move(obstacle.getX-moveSpeed,obstacle.getY);
       });
@@ -349,12 +408,10 @@
         groundContainer.x = -128;
       }
       groundContainer.x -= moveSpeed;
+      wc.update();
     }
 
     app.ticker.add(moveObstacles);
-    app.ticker.add(()=>{
-      wc.update();
-    });
 
     init();
 
