@@ -10,12 +10,12 @@ class Logger {
     }
 
     public function setTimestamp($format) {
-        $this->timestamp = "\"timestamp\":\"" . date($format) . "\"";
+        $this->timestamp = "{\"timestamp\":\"" . date($format) . "\"";
     }
 
     public function putLog($insert) {
-        if (isset($this->prefix)) {
-            file_put_contents($this->file, $this->timestamp . ",\"log\":" .  $insert . ",", FILE_APPEND);
+        if (isset($this->timestamp)) {
+            file_put_contents($this->file, $this->timestamp . ",\"log\":" .  $insert . "},\n", FILE_APPEND);
         }
     }
 
@@ -26,7 +26,7 @@ class Logger {
 
 }
 
-$log = new Logger("logger.txt");
+$log = new Logger("log.txt");
 $log->setTimestamp("D M d 'y h.i A");
 
 if (isset($_POST['package'])) {

@@ -64,16 +64,15 @@
     <div class="h1" id="title">
       Registration!
     </div>
-    <div class="container">
+    <div class="container" id="container-main">
     </div>
-
+    <div class='section'><div class='row'><input type='button' id='submit' value='Submit'></div></div>
   </body>
   <script type="text/javascript">
     var Container = document.querySelector(".container");
     var Questions = "Name:30,Nickname:30,Age:4,Level:10,Section:4,Student Number:4,Gender:7,School:30,Favourite Subject:30,Favourite Food:30,Favourite Teacher:30".split(",");
-    var Answers = "{";
-    var AnswersJSON;
     var Colors = "#4285F4,#DB4437,#F4B400,#0F9D58".split(",");
+
     Questions.forEach((question,i) => {
       question = question.split(":");
       if(question[0] == "School"){
@@ -84,8 +83,7 @@
         "<div class='row'><input class='questions' id='"+question[0].split(" ").join("")+"' type='text' name='"+question[0]+"' size='"+question[1]+"'/></div></div>";
       }
     });
-    var school = document.getElementById("School");
-    Container.innerHTML += "<div class='section'><div class='row'><input type='button' id='submit' value='submit'></div></div>"
+
     var itr = 0;
     var Sections = document.getElementsByClassName("section");
     for(var i = 0; i < Sections.length; i++){
@@ -93,10 +91,34 @@
       itr = itr < 3 ? itr + 1 : 0;
     }
 
-    var Responses = document.getElementsByClassName("questions");
     var submitButton = document.getElementById("submit");
+    var isSubmitted = false;
 
     submitButton.onclick = ()=>{
+      if(!isSubmitted){
+        isSubmitted = !isSubmitted;
+        submitButton.value = "...";
+        var json_upload = "package=" + JSON.stringify(getJSONByInputClass("questions"));
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("POST", "write.php");
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.send(json_upload);
+        xmlhttp.onreadystatechange = function()
+        {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+            {
+                setTimeout(function(){submitButton.value = "Done!";},2000); // Another callback here
+                document.getElementById("container-main").innerHTML = "";
+            }
+        };
+      }else{
+        window.location = "http://enlearn.online";
+      }
+    };
+
+    function getJSONByInputClass(className){
+      var Responses = document.getElementsByClassName(className);
+      var Answers = "{";
       for(var i=0; i < Responses.length; i++){
         var value = Responses[i].value;
         var id = Responses[i].id;
@@ -104,16 +126,8 @@
         Answers += (i == Responses.length - 1) ? "" : ",";
       }
       Answers += "}";
-      AnswersJSON = JSON.parse(Answers);
-      var json_upload = "package=" + JSON.stringify(Answers);
-      var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-      xmlhttp.open("POST", "write.php");
-      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xmlhttp.send(json_upload);
-
-    };
-
-    //JSON Stuff
+      return JSON.parse(Answers);
+    }
 
   </script>
 </html>
