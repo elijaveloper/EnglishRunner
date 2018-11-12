@@ -72,6 +72,7 @@
     var Container = document.querySelector(".container");
     var Questions = "Name:30,Nickname:30,Age:4,Level:10,Section:4,Student Number:4,Gender:7,School:30,Favourite Subject:30,Favourite Food:30,Favourite Teacher:30".split(",");
     var Answers = "{";
+    var AnswersJSON;
     var Colors = "#4285F4,#DB4437,#F4B400,#0F9D58".split(",");
     Questions.forEach((question,i) => {
       question = question.split(":");
@@ -94,6 +95,7 @@
 
     var Responses = document.getElementsByClassName("questions");
     var submitButton = document.getElementById("submit");
+
     submitButton.onclick = ()=>{
       for(var i=0; i < Responses.length; i++){
         var value = Responses[i].value;
@@ -102,9 +104,16 @@
         Answers += (i == Responses.length - 1) ? "" : ",";
       }
       Answers += "}";
-      var AnswersJSON = JSON.parse(Answers);
-      console.log(AnswersJSON);
+      AnswersJSON = JSON.parse(Answers);
+      var json_upload = "package=" + JSON.stringify(Answers);
+      var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+      xmlhttp.open("POST", "write.php");
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xmlhttp.send(json_upload);
+
     };
+
+    //JSON Stuff
 
   </script>
 </html>
