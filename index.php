@@ -6,10 +6,13 @@
     <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
     <style media="screen">
       body{
-        background-color: #f9f9f9;
+        background-color: #DB4437;
+        padding: 40px;
+        text-align:center;
       }
       .section{
-        margin: 40px;
+        display: inline-block;
+        margin: 20px;
         padding: 2em;
         /* background-color: #f9f9f9; */
         text-align: center;
@@ -23,7 +26,7 @@
         font-size: 4em;
         text-align: center;
         margin: 40px;
-        color:#4285F4;
+        color:#ffffff;
       }
       input,textarea{
         font-family: 'Concert One';
@@ -32,6 +35,7 @@
         border: 3px solid #ededed;
         padding: 10px;
         cursor: url("img/hand.png"), auto;
+        background-color: #f0f0f0;
       }
       input[type=text]:focus, textarea:focus {
         outline:none;
@@ -57,6 +61,14 @@
           box-shadow: 0px 3px 0px #2142a2, 0px 3px 6px rgba(0,0,0,.9);
           position: relative;
           top: 6px;
+      }
+
+      .container{
+        text-align: center;
+        margin: auto;
+        background-color: #ffffff;
+        max-width: 80%;
+        box-shadow: 0px 9px 25px rgba(0,0,0,.3);
       }
     </style>
   </head>
