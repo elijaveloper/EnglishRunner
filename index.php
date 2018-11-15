@@ -48,6 +48,7 @@
 
       #submit{
         /* border: 3px solid rgba(81, 203, 238, 1); */
+        display:none;
         outline:none;
         border: 1px solid #4285F4;
         background-color: #4285F4;
@@ -76,34 +77,42 @@
     <div class="h1" id="title">
       Registration!
     </div>
+    <!-- <div class='section'><div class='row'><input type='button' id='initp1' value='P1'><input type='button' id='initp2' value='P2'></div></div> -->
     <div class="container" id="container-main">
     </div>
     <div class='section'><div class='row'><input type='button' id='submit' value='Submit'></div></div>
   </body>
   <script type="text/javascript">
+
+
     var Container = document.querySelector(".container");
-    var Questions = "Name:30,Nickname:30,Age:4,Level:10,Section:4,Student Number:4,Gender:7,School:30,Favourite Subject:30,Favourite Food:30,Favourite Teacher:30".split(",");
+    var QuestionStringP1 = "Name:30,Nickname:30,Age:4,Level:10,Section:4,Student Number:4,Gender:7,School:30".split(",");
+    var QuestionStringP2 = "Name:30,Nickname:30,Age:4,Level:10,Section:4,Student Number:4,Gender:7,School:30,Favourite Subject:30,Favourite Food:30,Favourite Teacher:30".split(",");
     var Colors = "#4285F4,#DB4437,#F4B400,#0F9D58".split(",");
 
-    Questions.forEach((question,i) => {
-      question = question.split(":");
-      if(question[0] == "School"){
-        Container.innerHTML += "<div class='section'><div class='row'>"+question[0]+"</div>" +
-          "<div class='row'><textarea class='questions' id='"+question[0].split(" ").join("")+"' name='"+question[0]+"' cols='"+question[1]+" rows=2'></textarea></div></div>";
-      }else{
-        Container.innerHTML += "<div class='section'><div class='row'>"+question[0]+"</div>" +
-        "<div class='row'><input class='questions' id='"+question[0].split(" ").join("")+"' type='text' name='"+question[0]+"' size='"+question[1]+"'/></div></div>";
-      }
-    });
+    function initQuestions(Questions){
+      Questions.forEach((question,i) => {
+        question = question.split(":");
+        if(question[0] == "School"){
+          Container.innerHTML += "<div class='section'><div class='row'>"+question[0]+"</div>" +
+            "<div class='row'><textarea class='questions' id='"+question[0].split(" ").join("")+"' name='"+question[0]+"' cols='"+question[1]+" rows=2'></textarea></div></div>";
+        }else{
+          Container.innerHTML += "<div class='section'><div class='row'>"+question[0]+"</div>" +
+          "<div class='row'><input class='questions' id='"+question[0].split(" ").join("")+"' type='text' name='"+question[0]+"' size='"+question[1]+"'/></div></div>";
+        }
+      });
 
-    var itr = 0;
-    var Sections = document.getElementsByClassName("section");
-    for(var i = 0; i < Sections.length; i++){
-      Sections[i].style.color = Colors[itr];
-      itr = itr < 3 ? itr + 1 : 0;
+      var itr = 0;
+      var Sections = document.getElementsByClassName("section");
+      for(var i = 0; i < Sections.length; i++){
+        Sections[i].style.color = Colors[itr];
+        itr = itr < 3 ? itr + 1 : 0;
+      }
     }
 
+    initQuestions(QuestionStringP1);
     var submitButton = document.getElementById("submit");
+    submitButton.style.display = "inline-block";
     var isSubmitted = false;
 
     submitButton.onclick = ()=>{
@@ -124,7 +133,12 @@
             }
         };
       }else{
-        window.location = "http://enlearn.online";
+        var finished = <?php if(isset($_GET['finished'])){echo "true";}else{echo "false";} ?>;
+        if(finished){
+            window.location.href = "http://enlearn.online/TypingTutor/etypinghome.php";
+        }else{
+            window.location = "http://enlearn.online?finished=true";
+        }
       }
     };
 
