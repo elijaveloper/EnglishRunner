@@ -4,76 +4,9 @@
     <meta charset="utf-8">
     <title></title>
     <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
-    <style media="screen">
-      body{
-        background-color: #DB4437;
-        padding: 40px;
-        text-align:center;
-      }
-      .section{
-        display: inline-block;
-        margin: 20px;
-        padding: 2em;
-        /* background-color: #f9f9f9; */
-        text-align: center;
-      }
-      .row{
-        font-family: 'Concert One';
-        font-size: 4em;
-      }
-      #title{
-        font-family: 'Concert One';
-        font-size: 4em;
-        text-align: center;
-        margin: 40px;
-        color:#ffffff;
-      }
-      input,textarea{
-        font-family: 'Concert One';
-        font-size: 1em;
-        border-radius: 15px;
-        border: 3px solid #ededed;
-        padding: 10px;
-        cursor: url("img/hand.png"), auto;
-        background-color: #f0f0f0;
-      }
-      input[type=text]:focus, textarea:focus {
-        outline:none;
-        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-        border: 3px solid rgba(81, 203, 238, 1);
-        /* padding: 3px 0px 3px 3px;
-        margin: 5px 1px 3px 0px;
-        border: 1px solid rgba(81, 203, 238, 1); */
-      }
-
-      input[type=button]{
-        /* border: 3px solid rgba(81, 203, 238, 1); */
-        display:none;
-        outline:none;
-        border: 1px solid #4285F4;
-        background-color: #4285F4;
-        color: #FFFFFF;
-        padding: 25px;
-        cursor: url("img/hand.png"), auto;
-        box-shadow: 0px 9px 0px #2142a2, 0px 9px 25px rgba(0,0,0,.7);
-      }
-
-      input[type=button]:active {
-          box-shadow: 0px 3px 0px #2142a2, 0px 3px 6px rgba(0,0,0,.9);
-          position: relative;
-          top: 6px;
-      }
-
-      .container{
-        text-align: center;
-        margin: auto;
-        background-color: #ffffff;
-        max-width: 80%;
-        box-shadow: 0px 9px 25px rgba(0,0,0,.3);
-      }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
   </head>
-  <body>
+  <body class="background-color-red">
     <div class="h1" id="title">
       Registration!
     </div>
@@ -85,6 +18,11 @@
     <div class='section'><div class='row'><input type='button' id='submit' value='Submit'></div></div>
   </body>
   <script type="text/javascript">
+    String.prototype.replaceAll = function (find, replace) {
+      var str = this;
+      return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+    };
+
     var videoLink = "https://youtu.be/T-tY8rsxoJA";
     var helperLink = "http://enlearn.online/r.png";
 
@@ -120,11 +58,11 @@
     var helperButton = document.getElementById("helper");
     submitButton.style.display = "inline-block";
     var isSubmitted = false;
-    
+
     videoButton.onclick = ()=>{
         window.open(videoLink);
     }
-    
+
     helperButton.onclick = ()=>{
         window.open(helperLink);
     }
@@ -133,7 +71,10 @@
       if(!isSubmitted){
         isSubmitted = !isSubmitted;
         submitButton.value = "...";
-        var json_upload = "package=" + JSON.stringify(getJSONByInputClass("questions")).replace(".","&");
+        var temp = JSON.stringify(getJSONByInputClass("questions"));
+        temp = temp.replaceAll("."," ");
+        var json_upload = "package=" + temp;
+        console.log(json_upload);
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("POST", "write.php");
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

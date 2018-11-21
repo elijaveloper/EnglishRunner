@@ -1,0 +1,113 @@
+body{
+  /* background-color: #DB4437; */
+  background-color: #d2d2d2;
+  padding: 40px;
+  text-align:center;
+}
+
+.section{
+  display: inline-block;
+  margin: 20px;
+  padding: 2em;
+  /* background-color: #d2d2d2; */
+  text-align: center;
+}
+
+.row{
+  font-family: 'Concert One';
+  font-size: 4em;
+}
+
+#title{
+  font-family: 'Concert One';
+  font-size: 4em;
+  text-align: center;
+  margin: 40px;
+  color:#ffffff;
+}
+
+input,textarea{
+  font-family: 'Concert One';
+  font-size: 1em;
+  border-radius: 15px;
+  border: 3px solid #ededed;
+  padding: 10px;
+  cursor: url("img/hand.png"), auto;
+  background-color: #f0f0f0;
+}
+
+input[type=text]:focus, textarea:focus, input[type=password]:focus {
+  outline:none;
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  border: 3px solid rgba(81, 203, 238, 1);
+  /* padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid rgba(81, 203, 238, 1); */
+}
+
+input[type=button]{
+  /* border: 3px solid rgba(81, 203, 238, 1); */
+  display:none;
+  outline:none;
+  border: 1px solid #4285F4;
+  background-color: #4285F4;
+  color: #FFFFFF;
+  padding: 25px;
+  cursor: url("img/hand.png"), auto;
+  box-shadow: 0px 9px 0px #2142a2, 0px 9px 25px rgba(0,0,0,.7);
+}
+
+input[type=button]:active {
+    box-shadow: 0px 3px 0px #2142a2, 0px 3px 6px rgba(0,0,0,.9);
+    position: relative;
+    top: 6px;
+}
+
+.container{
+  text-align: center;
+  margin: auto;
+  background-color: #ffffff;
+  max-width: 80%;
+  box-shadow: 0px 9px 25px rgba(0,0,0,.3);
+  border-radius: 15px;
+}
+
+.text-color-red{
+  color: #DB4437
+}
+
+.background-color-red{
+  background-color: #DB4437
+}
+
+.text-color-green{
+  color: #0F9D58;
+}
+
+.background-color-green{
+  background-color: #0F9D58;
+}
+
+.text-color-blue{
+  color: #4285F4;
+}
+
+.background-color-blue{
+  background-color: #4285F4;
+}
+
+.text-color-yellow{
+  color: #F4B400;
+}
+
+.background-color-yellow{
+  background-color: #F4B400;
+}
+
+.text-color-black{
+  color: #000000;
+}
+
+.text-color-white{
+  color: #ffffff;
+}
