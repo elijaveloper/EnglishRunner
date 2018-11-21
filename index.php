@@ -46,7 +46,7 @@
         border: 1px solid rgba(81, 203, 238, 1); */
       }
 
-      #submit{
+      input[type=button]{
         /* border: 3px solid rgba(81, 203, 238, 1); */
         display:none;
         outline:none;
@@ -58,36 +58,18 @@
         box-shadow: 0px 9px 0px #2142a2, 0px 9px 25px rgba(0,0,0,.7);
       }
 
-      #submit:active {
+      input[type=button]:active {
           box-shadow: 0px 3px 0px #2142a2, 0px 3px 6px rgba(0,0,0,.9);
           position: relative;
           top: 6px;
       }
 
       .container{
-        display: none;
         text-align: center;
         margin: auto;
         background-color: #ffffff;
         max-width: 80%;
         box-shadow: 0px 9px 25px rgba(0,0,0,.3);
-      }
-
-      .buttons-select{
-        margin: 25px;
-        outline:none;
-        border: 1px solid #4285F4;
-        background-color: #4285F4;
-        color: #FFFFFF;
-        padding: 25px;
-        cursor: url("img/hand.png"), auto;
-        box-shadow: 0px 9px 0px #2142a2, 0px 9px 25px rgba(0,0,0,.7);
-      }
-
-      .buttons-select:active {
-          box-shadow: 0px 3px 0px #2142a2, 0px 3px 6px rgba(0,0,0,.9);
-          position: relative;
-          top: 6px;
       }
     </style>
   </head>
@@ -95,13 +77,16 @@
     <div class="h1" id="title">
       Registration!
     </div>
-    <div class='section'><div class='row'><input type='button' class="buttons-select" id='initp1' value='P1'><input class="buttons-select" type='button' id='initp2' value='P2'></div></div>
+    <div class='section'><div class='row'><input type='button' id='video' value='Watch Video' style="display:block"></div></div>
+    <div class='section'><div class='row'><input type='button' id='helper' value='Need help?' style="display:block"></div></div>
+    <!-- <div class='section'><div class='row'><input type='button' id='initp1' value='P1'><input type='button' id='initp2' value='P2'></div></div> -->
     <div class="container" id="container-main">
     </div>
     <div class='section'><div class='row'><input type='button' id='submit' value='Submit'></div></div>
   </body>
   <script type="text/javascript">
-
+    var videoLink = "https://youtu.be/T-tY8rsxoJA";
+    var helperLink = "http://enlearn.online/r.png";
 
     var Container = document.querySelector(".container");
     var QuestionStringP1 = "Name:30,Nickname:30,Age:4,Level:10,Section:4,Student Number:4,Gender:7,School:30".split(",");
@@ -128,25 +113,27 @@
       }
     }
 
-    initQuestions(QuestionStringP1);
+    //initiation starts here
+    initQuestions(QuestionStringP2);
     var submitButton = document.getElementById("submit");
-    var buttonSelectP1 = document.getElementById("initp1");
-    var buttonSelectP2 = document.getElementById("initp2");
-    //submitButton.style.display = "inline-block";
+    var videoButton = document.getElementById("video");
+    var helperButton = document.getElementById("helper");
+    submitButton.style.display = "inline-block";
     var isSubmitted = false;
-
-    buttonSelectP1.onclick = () =>{
-      submitButton.style.display = "inline-block";
-      Container.style.display = "block";
-      buttonSelectP1.style.display = "none";
-      buttonSelectP2.style.display = "none";
+    
+    videoButton.onclick = ()=>{
+        window.open(videoLink);
+    }
+    
+    helperButton.onclick = ()=>{
+        window.open(helperLink);
     }
 
     submitButton.onclick = ()=>{
       if(!isSubmitted){
         isSubmitted = !isSubmitted;
         submitButton.value = "...";
-        var json_upload = "package=" + JSON.stringify(getJSONByInputClass("questions"));
+        var json_upload = "package=" + JSON.stringify(getJSONByInputClass("questions")).replace(".","&");
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("POST", "write.php");
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
