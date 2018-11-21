@@ -65,11 +65,29 @@
       }
 
       .container{
+        display: none;
         text-align: center;
         margin: auto;
         background-color: #ffffff;
         max-width: 80%;
         box-shadow: 0px 9px 25px rgba(0,0,0,.3);
+      }
+
+      .buttons-select{
+        margin: 25px;
+        outline:none;
+        border: 1px solid #4285F4;
+        background-color: #4285F4;
+        color: #FFFFFF;
+        padding: 25px;
+        cursor: url("img/hand.png"), auto;
+        box-shadow: 0px 9px 0px #2142a2, 0px 9px 25px rgba(0,0,0,.7);
+      }
+
+      .buttons-select:active {
+          box-shadow: 0px 3px 0px #2142a2, 0px 3px 6px rgba(0,0,0,.9);
+          position: relative;
+          top: 6px;
       }
     </style>
   </head>
@@ -77,7 +95,7 @@
     <div class="h1" id="title">
       Registration!
     </div>
-    <!-- <div class='section'><div class='row'><input type='button' id='initp1' value='P1'><input type='button' id='initp2' value='P2'></div></div> -->
+    <div class='section'><div class='row'><input type='button' class="buttons-select" id='initp1' value='P1'><input class="buttons-select" type='button' id='initp2' value='P2'></div></div>
     <div class="container" id="container-main">
     </div>
     <div class='section'><div class='row'><input type='button' id='submit' value='Submit'></div></div>
@@ -112,8 +130,17 @@
 
     initQuestions(QuestionStringP1);
     var submitButton = document.getElementById("submit");
-    submitButton.style.display = "inline-block";
+    var buttonSelectP1 = document.getElementById("initp1");
+    var buttonSelectP2 = document.getElementById("initp2");
+    //submitButton.style.display = "inline-block";
     var isSubmitted = false;
+
+    buttonSelectP1.onclick = () =>{
+      submitButton.style.display = "inline-block";
+      Container.style.display = "block";
+      buttonSelectP1.style.display = "none";
+      buttonSelectP2.style.display = "none";
+    }
 
     submitButton.onclick = ()=>{
       if(!isSubmitted){

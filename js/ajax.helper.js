@@ -24,7 +24,7 @@ class AjaxUtil{
             callback();
         }
     }
-    this.ajax.open("POST", file);
+    this.ajax.open("GET", file);
     this.ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     this.ajax.send(json);
   }
