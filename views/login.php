@@ -13,14 +13,27 @@
     <div class="container" id="login-container">
       <div class="section">
         <div class="row">
+          example:
+          <span class="text-color-red">61</span>
+          <span class="text-color-green">p1/1</span>
+          <span class="text-color-blue">36</span>
+        </div>
+      </div>
+      <div class="section">
+        <div class="row">
           <span class="text-color-red">Username</span>
-          <input type="text" name="" value="">
+          <input type="text" name="username" value="">
+        </div>
+      </div>
+      <div class="section">
+        <div class="row">
+          example: 00000000
         </div>
       </div>
       <div class="section">
         <div class="row">
           <span class="text-color-green">Password</span>
-          <input type="password" name="" value="">
+          <input type="password" name="password" value="">
         </div>
       </div>
       <div class='section'>

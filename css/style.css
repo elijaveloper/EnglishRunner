@@ -12,15 +12,18 @@ body{
   /* background-color: #d2d2d2; */
   text-align: center;
 }
-
+::placeholder{
+  opacity:0.2;
+}
 .row{
   font-family: 'Concert One';
   font-size: 4em;
+  color: #454545;
 }
 
 #title{
   font-family: 'Concert One';
-  font-size: 4em;
+  font-size: 10em;
   text-align: center;
   margin: 40px;
   color:#ffffff;

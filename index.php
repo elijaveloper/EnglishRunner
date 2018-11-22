@@ -31,28 +31,34 @@
     var QuestionStringP2 = "Name:30,Nickname:30,Age:4,Level:10,Section:4,Student Number:4,Gender:7,School:30,Favourite Subject:30,Favourite Food:30,Favourite Teacher:30".split(",");
     var Colors = "#4285F4,#DB4437,#F4B400,#0F9D58".split(",");
 
-    function initQuestions(Questions){
+    function initQuestions(Questions,cntr){
       Questions.forEach((question,i) => {
         question = question.split(":");
         if(question[0] == "School"){
-          Container.innerHTML += "<div class='section'><div class='row'>"+question[0]+"</div>" +
+          cntr.innerHTML += "<div class='section'><div class='row'>"+question[0]+"</div>" +
             "<div class='row'><textarea class='questions' id='"+question[0].split(" ").join("")+"' name='"+question[0]+"' cols='"+question[1]+" rows=2'></textarea></div></div>";
         }else{
-          Container.innerHTML += "<div class='section'><div class='row'>"+question[0]+"</div>" +
+          cntr.innerHTML += "<div class='section'><div class='row'>"+question[0]+"</div>" +
           "<div class='row'><input class='questions' id='"+question[0].split(" ").join("")+"' type='text' name='"+question[0]+"' size='"+question[1]+"'/></div></div>";
         }
       });
 
+      rainbowColorsByClass("section",Colors);
+    }
+
+    function rainbowColorsByClass(className,colors){
+      colors = colors || "#4285F4,#DB4437,#F4B400,#0F9D58".split(",");
       var itr = 0;
-      var Sections = document.getElementsByClassName("section");
+      var Sections = document.getElementsByClassName(className);
       for(var i = 0; i < Sections.length; i++){
-        Sections[i].style.color = Colors[itr];
-        itr = itr < 3 ? itr + 1 : 0;
+        Sections[i].style.color = colors[itr];
+        itr = itr < colors.length-1 ? itr + 1 : 0;
       }
     }
 
     //initiation starts here
-    initQuestions(QuestionStringP2);
+    initQuestions(QuestionStringP2,Container);
+
     var submitButton = document.getElementById("submit");
     var videoButton = document.getElementById("video");
     var helperButton = document.getElementById("helper");
@@ -71,10 +77,12 @@
       if(!isSubmitted){
         isSubmitted = !isSubmitted;
         submitButton.value = "...";
+
         var temp = JSON.stringify(getJSONByInputClass("questions"));
         temp = temp.replaceAll("."," ");
         var json_upload = "package=" + temp;
         console.log(json_upload);
+
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("POST", "write.php");
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
