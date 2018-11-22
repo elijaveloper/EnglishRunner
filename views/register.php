@@ -95,6 +95,11 @@
               callback();
           }
       };
+
+      //save to LocalStorage as well
+      let count = localStorage.getItem("storeCount") + 1;
+      localStorage.setItem("storeCount",count);
+      localStorage.setItem(count,json_upload);
     }
 
     function getJSONByInputClass(className){
